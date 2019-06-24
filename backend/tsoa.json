@@ -1,0 +1,15 @@
+{
+    "swagger": {
+        "outputDirectory": "./dist",
+        "entryFile": "./server/server.ts",
+        "basePath": "/api"
+    },
+    "routes": {
+        "entryFile": "./server/server.ts",
+        "routesDir": "./server",
+        "basePath": "/api"
+    },
+    "ignore": [
+      "**/node_modules/**"
+    ]
+}

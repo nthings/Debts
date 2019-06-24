@@ -1,0 +1,46 @@
+{
+    "name": "debts-services",
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {
+        "start": "node dist/server.js",
+        "dev": "concurrently \"mongod\" \"tsc -w\" \"nodemon dist/server\"",
+        "dev-nodb": "concurrently \"tsc -w\" \"nodemon --inspect dist/server\"",
+        "watch": "tsc -w",
+        "gen-routes": "tsoa routes",
+        "gen-swagger": "tsoa swagger"
+    },
+    "private": false,
+    "dependencies": {
+        "@types/async": "^2.0.49",
+        "@types/express": "^4.16.0",
+        "@types/express-session": "^1.15.10",
+        "@types/node": "^9.6.23",
+        "@types/passport": "^0.4.5",
+        "@types/socket.io": "^1.4.36",
+        "async": "^2.6.1",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.18.3",
+        "core-js": "^2.5.7",
+        "express": "^4.16.3",
+        "express-jwt": "^5.3.1",
+        "jsonwebtoken": "^8.3.0",
+        "morgan": "^1.8.2",
+        "nodemailer": "^4.6.7",
+        "reflect-metadata": "^0.1.12",
+        "return-deep-diff": "^0.3.0",
+        "sequelize": "^5.8.12",
+        "sequelize-typescript": "^0.6.11",
+        "socket-controllers": "0.0.3",
+        "socket.io": "^2.1.1",
+        "tsoa": "^2.1.8",
+        "typescript": "^2.9.2",
+        "typings": "^2.1.1"
+    },
+    "devDependencies": {
+        "concurrently": "^3.6.0",
+        "nodemon": "^1.18.1",
+        "ts-node": "~4.1.0",
+        "tslint": "~5.9.1"
+    }
+}
