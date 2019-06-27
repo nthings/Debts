@@ -10,6 +10,8 @@ const models: TsoaRoute.Models = {
         "properties": {
             "name": { "dataType": "string", "required": true },
             "color": { "dataType": "string", "required": true },
+            "username": { "dataType": "string" },
+            "password": { "dataType": "string" },
         },
     },
     "IPeriod": {

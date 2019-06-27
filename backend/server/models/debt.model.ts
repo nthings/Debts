@@ -1,6 +1,6 @@
-import { People, IPeople } from './people.model';
-import { Table, Column, Model, HasOne } from 'sequelize-typescript';
-import { Period, IPeriod } from './period.model';
+import { People, IPeople } from './People.model';
+import { Table, Column, Model, BelongsTo } from 'sequelize-typescript';
+import { Period, IPeriod } from './Period.model';
 
 export interface IDebt {
     date: Date;
@@ -11,7 +11,10 @@ export interface IDebt {
     period: IPeriod;
 }
 
-@Table
+@Table({
+    timestamps: true,
+    tableName: 'debts'
+})
 export class Debt extends Model<Debt> implements IDebt {
     @Column
     date: Date;
@@ -25,9 +28,9 @@ export class Debt extends Model<Debt> implements IDebt {
     @Column
     amount: number;
 
-    @HasOne(() => People)
+    @BelongsTo(() => People, 'ownerId')
     owner: People;
 
-    @HasOne(() => Period)
+    @BelongsTo(() => Period, 'periodId')
     period: Period;
 }

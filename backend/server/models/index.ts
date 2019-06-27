@@ -1,13 +1,32 @@
-import {Sequelize} from 'sequelize-typescript';
+import { Sequelize } from 'sequelize-typescript';
+import { People } from './People.model';
+import { Debt } from './Debt.model';
+import { Period } from './Period.model';
 
-export * from './people.model';
-export * from './debt.model';
-export * from './period.model';
+export * from './People.model';
+export * from './Debt.model';
+export * from './Period.model';
 
-export const sequelize =  new Sequelize({
-        database: 'debts',
-        dialect: 'mysql',
-        username: 'root',
-        password: '',
-        modelPaths: [__dirname + '/*.model.ts']
+export const sequelize = new Sequelize({
+    host: 'localhost',
+    dialect: 'mysql',
+    port: 3306,
+    define: {
+        paranoid: true
+    },
+    database: 'debts',
+    username: 'root',
+    password: '',
 });
+
+(async () => {
+    console.log(await sequelize.databaseVersion());
+
+    sequelize.addModels([
+        People,
+        Debt,
+        Period,
+    ]);
+
+    sequelize.sync();
+})();

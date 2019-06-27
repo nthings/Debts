@@ -3,13 +3,16 @@ import * as express from 'express';
 import * as socketIo from 'socket.io';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
+import * as swaggerUi from 'swagger-ui-express';
 import { useSocketServer } from 'socket-controllers';
 import { RegisterRoutes } from './routes';
+const swaggerDocument = require('./swagger.json');
 import './controllers';
 
 const app: express.Express = express();
 const server: Server = createServer(app);
 let io: SocketIO.Server;
+
 
 // CORS HEADERS
 app.use((req, res, next) => {
@@ -30,6 +33,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // Log
 app.use(morgan('dev'));
+
+// Documentation
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Login User
 app.post('/login', (req, res) => {
