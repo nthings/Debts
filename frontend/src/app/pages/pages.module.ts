@@ -19,7 +19,7 @@ const PAGES_COMPONENTS = [
     DashboardModule,
     ECommerceModule,
     MiscellaneousModule,
-    PeopleModule
+    PeopleModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,
