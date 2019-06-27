@@ -4,8 +4,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node dist/server.js",
-        "dev": "concurrently \"mongod\" \"tsc -w\" \"nodemon dist/server\"",
-        "dev-nodb": "concurrently \"tsc -w\" \"nodemon --inspect dist/server\"",
+        "dev": "concurrently \"tsc -w\" \"nodemon dist/server\"",
         "watch": "tsc -w",
         "gen-routes": "tsoa routes",
         "gen-swagger": "tsoa swagger"
@@ -26,6 +25,7 @@
         "express-jwt": "^5.3.1",
         "jsonwebtoken": "^8.3.0",
         "morgan": "^1.8.2",
+        "mysql2": "^1.6.5",
         "nodemailer": "^4.6.7",
         "reflect-metadata": "^0.1.12",
         "return-deep-diff": "^0.3.0",
@@ -33,7 +33,7 @@
         "sequelize-typescript": "^0.6.11",
         "socket-controllers": "0.0.3",
         "socket.io": "^2.1.1",
-        "tsoa": "^2.1.8",
+        "tsoa": "^2.4.3",
         "typescript": "^2.9.2",
         "typings": "^2.1.1"
     },

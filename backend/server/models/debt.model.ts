@@ -1,9 +1,18 @@
-import { People } from './people.model';
+import { People, IPeople } from './people.model';
 import { Table, Column, Model, HasOne } from 'sequelize-typescript';
-import { Period } from './period.model';
+import { Period, IPeriod } from './period.model';
+
+export interface IDebt {
+    date: Date;
+    description: string;
+    custom_description: string;
+    amount: number;
+    owner: IPeople;
+    period: IPeriod;
+}
 
 @Table
-export class Debt extends Model<Debt> {
+export class Debt extends Model<Debt> implements IDebt {
     @Column
     date: Date;
 

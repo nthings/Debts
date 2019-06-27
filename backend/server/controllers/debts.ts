@@ -1,10 +1,10 @@
 import {Route, Get, Post, Body, Put} from 'tsoa';
-import { DebtsModel, Debt } from '../models';
+import { Debt, IDebt } from '../models';
 import BaseCtrl from './base';
 
 @Route('/debts')
 export class DebtsCtrl extends BaseCtrl {
-    model = DebtsModel;
+    model = Debt;
 
     @Get()
     public async _getAll(): Promise<any> {
@@ -12,12 +12,12 @@ export class DebtsCtrl extends BaseCtrl {
     }
 
     @Put()
-    public async _insert(@Body() debt: Debt): Promise<any> {
+    public async _insert(@Body() debt: IDebt): Promise<any> {
         return this.insert(debt);
     }
 
     @Post('{id}')
-    public async _update(id: any, @Body() debt: Debt): Promise<any> {
+    public async _update(id: any, @Body() debt: IDebt): Promise<any> {
         return this.update(id, debt);
     }
 

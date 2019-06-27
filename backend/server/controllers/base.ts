@@ -1,5 +1,5 @@
-import { Paths } from '../utils/interfaces/Paths';
 import { ConnectedSocket, SocketIO, SocketController, MessageBody, OnConnect, OnMessage } from 'socket-controllers';
+import { Op } from 'sequelize';
 
 @SocketController()
 abstract class BaseCtrl {
@@ -8,15 +8,7 @@ abstract class BaseCtrl {
 
     // Get all
     getAll = async () => {
-        return await this.model.find({});
-    }
-
-    getAllPopulate = async (paths: Array<Paths>) => {
-        return await this.model.find({}).populate(paths);
-    }
-
-    getPopulate = async (id, paths: Array<Paths>) => {
-        return await this.model.findOne({ _id: id }).populate(paths);
+        return await this.model.findAll();
     }
 
     // Count all
@@ -26,40 +18,35 @@ abstract class BaseCtrl {
 
     // Insert
     insert = async (body) => {
-        try {
-            const obj = new this.model(body);
-            return await obj.save();
-        } catch (err) {
-            this.checkErrors(err);
-        }
+        const obj = new this.model(body);
+        return await obj.save();
     }
 
     // Get by id
     get = async (id) => {
-        return await this.model.findOne({ _id: id });
+        return await this.model.findByPk(id);
     }
 
     // Update by id
     update = async (id, body) => {
-        try {
-            const obj = await this.model.findOne({ _id: id });
-            for (const k of Object.keys(body)) {
-                obj[k] = body[k];
+        return await this.model.update(body, {
+            where: {
+                id: {
+                    [Op.eq]: id
+                }
             }
-            return await obj.save();
-        } catch (err) {
-            this.checkErrors(err);
-        }
+        });
     }
 
     // Delete by id
     delete = async (id) => {
-        try {
-            const obj = await this.model.findOne({ _id: id });
-            return await obj.remove();
-        } catch (err) {
-            this.checkErrors(err);
-        }
+        return await this.model.destroy({
+            where: {
+                id: {
+                    [Op.eq]: id
+                }
+            }
+        });
     }
 
     // ------- Socket.IO -------
@@ -85,16 +72,6 @@ abstract class BaseCtrl {
     @OnMessage('doneUpdating')
     doneUpdating(@SocketIO() io: any, @ConnectedSocket() socket: any, @MessageBody() message: any) {
         io.to(Object.keys(socket.rooms)[1]).emit('doneUpdating', message);
-    }
-
-
-    // ------- Util Methods -------
-    checkErrors = (err) => {
-        // 11000 is the code for duplicate key error
-        if (err && err.code === 11000) {
-            err.status = 400;
-            throw err;
-        }
     }
 
 }

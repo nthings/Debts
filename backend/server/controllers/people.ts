@@ -1,10 +1,10 @@
 import {Route, Get, Post, Body, Put} from 'tsoa';
-import { PeopleModel, People } from '../models';
+import { People, IPeople } from '../models';
 import BaseCtrl from './base';
 
 @Route('/people')
 export class CellarCtrl extends BaseCtrl {
-    model = PeopleModel;
+    model = People;
 
     @Get()
     public async _getAll(): Promise<any> {
@@ -12,12 +12,12 @@ export class CellarCtrl extends BaseCtrl {
     }
 
     @Put()
-    public async _insert(@Body() people: People): Promise<any> {
+    public async _insert(@Body() people: IPeople): Promise<any> {
         return this.insert(people);
     }
 
     @Post('{id}')
-    public async _update(id: any, @Body() people: People): Promise<any> {
+    public async _update(id: any, @Body() people: IPeople): Promise<any> {
         return this.update(id, people);
     }
 
