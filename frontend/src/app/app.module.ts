@@ -27,7 +27,7 @@ import { LoadingModule } from './loading/loading.module';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
-    LoadingModule
+    LoadingModule,
   ],
   bootstrap: [AppComponent],
   providers: [

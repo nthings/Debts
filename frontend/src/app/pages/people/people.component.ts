@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SmartTableComponent } from '../../@theme/components';
@@ -46,8 +45,8 @@ export class PeopleComponent extends SmartTableComponent {
         },
     };
 
-    constructor(private peopleService: PeopleData,
-        private dialogService: NbDialogService,
+    constructor(protected peopleService: PeopleData,
+        protected dialogService: NbDialogService,
         private sanitizer: DomSanitizer) {
         super(peopleService, dialogService);
         this.settings = Object.assign(
