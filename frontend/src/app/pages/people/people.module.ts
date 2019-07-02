@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { PeopleComponent } from './people.component';
+import { ColorPickerInputModule } from './color-picker/color-picker.module';
 
 @NgModule({
     imports: [
         ThemeModule,
-        Ng2SmartTableModule,
+        ColorPickerInputModule,
     ],
     exports: [],
     declarations: [

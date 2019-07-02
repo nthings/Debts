@@ -10,7 +10,7 @@ export * from './Period.model';
 export const sequelize = new Sequelize({
     host: 'localhost',
     dialect: 'mysql',
-    port: 3306,
+    port: 4000,
     define: {
         paranoid: true
     },

@@ -51,6 +51,8 @@ import {
   TinyMCEComponent,
   ThemeSwitcherListComponent,
   ToggleSettingsButtonComponent,
+  SmartTableComponent,
+  DialogConfirmComponent,
 } from './components';
 import {
   CapitalizePipe,
@@ -69,6 +71,7 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -106,6 +109,7 @@ const NB_MODULES = [
   NbChatModule,
   NbTooltipModule,
   NbCalendarKitModule,
+  Ng2SmartTableModule,
 ];
 
 const COMPONENTS = [
@@ -123,10 +127,13 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
   ToggleSettingsButtonComponent,
+  SmartTableComponent,
+  DialogConfirmComponent,
 ];
 
 const ENTRY_COMPONENTS = [
   ThemeSwitcherListComponent,
+  DialogConfirmComponent,
 ];
 
 const PIPES = [
