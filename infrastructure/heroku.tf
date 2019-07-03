@@ -1,13 +1,13 @@
 variable "mysql_username" {}
 variable "mysql_password" {}
 
-terraform {
-  backend "s3" {
-    bucket = "nthings-terraform-state"
-    key    = "debts"
-    region = "us-east-1"
-  }
-}
+# terraform {
+#   backend "s3" {
+#     bucket = "nthings-terraform-state"
+#     key    = "debts"
+#     region = "us-east-1"
+#   }
+# }
 
 provider "heroku" {}
 
