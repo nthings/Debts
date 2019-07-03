@@ -6,5 +6,5 @@ build_infrastructure:
   image: hashicorp/terraform:light
   script:
   - cd infrastructure
-  - terraform init
-  - terraform plan
+  - init
+  - plan
