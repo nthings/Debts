@@ -3,8 +3,7 @@ stages:
 
 build_infrastructure:
   stage: infrastructure
-  image: hashicorp/terraform:light
+  image: hashicorp/terraform:latest
   script:
-  - cd infrastructure
-  - init
-  - plan
+  - init infrastructure/heroku.tf
+  - plan infrastructure/heroku.tf
