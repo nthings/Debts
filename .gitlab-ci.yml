@@ -5,6 +5,6 @@ build_infrastructure:
   stage: infrastructure
   image: hashicorp/terraform:light
   script:
-    - terraform --version
+    - terraform -version
     - terraform init
     - terraform plan -out plan
