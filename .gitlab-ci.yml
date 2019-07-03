@@ -3,7 +3,9 @@ stages:
 
 build_infrastructure:
   stage: infrastructure
-  image: hashicorp/terraform:0.12.3
+  image: hashicorp/terraform:light
   script:
+    - cd infrastructure
+    - terraform -version
     - terraform init
     - terraform plan
