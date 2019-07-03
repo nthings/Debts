@@ -3,7 +3,7 @@ import { People, IPeople } from '../models';
 import BaseCtrl from './base';
 
 @Route('/people')
-export class CellarCtrl extends BaseCtrl {
+export class CellarCtrl extends BaseCtrl<IPeople> {
     model = People;
 
     @Get()

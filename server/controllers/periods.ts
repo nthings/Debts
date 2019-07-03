@@ -3,7 +3,7 @@ import { Period, IPeriod } from '../models';
 import BaseCtrl from './base';
 
 @Route('/periods')
-export class PeriodsCtrl extends BaseCtrl {
+export class PeriodsCtrl extends BaseCtrl<IPeriod> {
     model = Period;
 
     @Get()

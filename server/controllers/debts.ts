@@ -3,7 +3,7 @@ import { Debt, IDebt } from '../models';
 import BaseCtrl from './base';
 
 @Route('/debts')
-export class DebtsCtrl extends BaseCtrl {
+export class DebtsCtrl extends BaseCtrl<IDebt> {
     model = Debt;
 
     @Get()

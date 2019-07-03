@@ -4,8 +4,16 @@
     "license": "MIT",
     "scripts": {
         "start": "node dist/server.js",
-        "dev": "concurrently \"tsc -w\" \"nodemon dist/server\"",
+        "build": "npm run build:backend && npm run build:frontend",
+        "build:prod": "npm run build:backend && npm run build:frontend:prod",
+        "build:frontend": "cd frontend && npm run build",
+        "build:frontend:prod": "cd frontend && npm run build:prod",
+        "build:backend": "tsc",
+        "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+        "dev:backend": "concurrently \"tsc -w\" \"nodemon --ignore './frontend/' dist/server\"",
+        "dev:frontend": "cd frontend && npm start",
         "watch": "tsc -w",
+        "tsoa:gen": "npm run gen-routes && npm run gen-swagger",
         "gen-routes": "tsoa routes",
         "gen-swagger": "tsoa swagger"
     },
