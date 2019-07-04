@@ -7,16 +7,21 @@ export * from './People.model';
 export * from './Debt.model';
 export * from './Period.model';
 
+const host = process.env.MYSQL_HOST || 'localhost';
+const port = +process.env.MYSQL_PORT || 4000;
+const username = process.env.MYSQL_USERNAME || 'root';
+const password = process.env.MYSQL_PASSWORD || '';
+
 export const sequelize = new Sequelize({
-    host: 'localhost',
+    host,
     dialect: 'mysql',
-    port: 4000,
+    port,
     define: {
         paranoid: true
     },
     database: 'debts',
-    username: 'root',
-    password: '',
+    username,
+    password,
 });
 
 (async () => {

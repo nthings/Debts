@@ -1,4 +1,5 @@
 import { createServer, Server } from 'http';
+import * as path from 'path';
 import * as express from 'express';
 import * as socketIo from 'socket.io';
 import * as bodyParser from 'body-parser';
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
 
 // Parsers
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Log
 app.use(morgan('dev'));
@@ -43,6 +44,12 @@ app.post('/login', (req, res) => {
     // const token = jwt.sign({user: user._id}, process.env.SESSION_SECRET); // , { expiresIn: 10 } seconds
     // res.status(200).json({user, token});
     res.status(200);
+});
+
+// Frontend
+app.use(express.static(path.join(__dirname, 'frontend')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
 
 RegisterRoutes(app);
