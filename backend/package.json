@@ -4,10 +4,12 @@
     "license": "MIT",
     "scripts": {
         "start": "node dist/server.js",
+        "build": "tsc",
         "dev": "concurrently \"tsc -w\" \"nodemon dist/server\"",
         "watch": "tsc -w",
         "gen-routes": "tsoa routes",
-        "gen-swagger": "tsoa swagger"
+        "gen-swagger": "tsoa swagger",
+        "tsoa:gen": "npm run gen-routes && npm run gen-swagger"
     },
     "private": false,
     "dependencies": {

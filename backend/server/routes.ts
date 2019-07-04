@@ -26,6 +26,10 @@ const models: TsoaRoute.Models = {
             "description": { "dataType": "string", "required": true },
             "custom_description": { "dataType": "string", "required": true },
             "amount": { "dataType": "double", "required": true },
+            "monthly_instalment": { "dataType": "double", "required": true },
+            "recurrent": { "dataType": "boolean", "required": true },
+            "payed": { "dataType": "boolean", "required": true },
+            "date_payed": { "dataType": "datetime", "required": true },
             "owner": { "ref": "IPeople", "required": true },
             "period": { "ref": "IPeriod", "required": true },
         },
@@ -110,6 +114,25 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller._get.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
+    app.delete('/api/people/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new CellarCtrl();
+
+
+            const promise = controller._delete.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
     app.get('/api/debts',
         function(request: any, response: any, next: any) {
             const args = {
@@ -186,6 +209,25 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller._get.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
+    app.delete('/api/debts/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DebtsCtrl();
+
+
+            const promise = controller._delete.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
     app.get('/api/periods',
         function(request: any, response: any, next: any) {
             const args = {
@@ -260,6 +302,25 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller._get.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.delete('/api/periods/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PeriodsCtrl();
+
+
+            const promise = controller._delete.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
 

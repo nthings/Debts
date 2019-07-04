@@ -7,6 +7,10 @@ export interface IDebt {
     description: string;
     custom_description: string;
     amount: number;
+    monthly_instalment: number;
+    recurrent: boolean;
+    payed: boolean;
+    date_payed: Date;
     owner: IPeople;
     period: IPeriod;
 }
@@ -27,6 +31,18 @@ export class Debt extends Model<Debt> implements IDebt {
 
     @Column
     amount: number;
+
+    @Column
+    monthly_instalment: number;
+
+    @Column
+    recurrent: boolean;
+
+    @Column
+    payed: boolean;
+
+    @Column
+    date_payed: Date;
 
     @BelongsTo(() => People, 'ownerId')
     owner: People;

@@ -20,13 +20,11 @@ export const sequelize = new Sequelize({
 });
 
 (async () => {
-    console.log(await sequelize.databaseVersion());
-
     sequelize.addModels([
         People,
         Debt,
         Period,
     ]);
 
-    sequelize.sync();
+    sequelize.sync({force: true});
 })();

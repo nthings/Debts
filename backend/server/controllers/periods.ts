@@ -1,9 +1,9 @@
-import {Route, Get, Post, Body, Put} from 'tsoa';
+import {Route, Get, Post, Body, Put, Delete} from 'tsoa';
 import { Period, IPeriod } from '../models';
 import BaseCtrl from './base';
 
 @Route('/periods')
-export class PeriodsCtrl extends BaseCtrl {
+export class PeriodsCtrl extends BaseCtrl<IPeriod> {
     model = Period;
 
     @Get()
@@ -24,5 +24,10 @@ export class PeriodsCtrl extends BaseCtrl {
     @Get('{id}')
     public async _get(id: any): Promise<any> {
         return this.get(id);
+    }
+
+    @Delete('{id}')
+    public async _delete(id: any): Promise<any> {
+        return this.delete(id);
     }
 }

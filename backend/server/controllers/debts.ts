@@ -1,9 +1,9 @@
-import {Route, Get, Post, Body, Put} from 'tsoa';
+import {Route, Get, Post, Body, Put, Delete} from 'tsoa';
 import { Debt, IDebt } from '../models';
 import BaseCtrl from './base';
 
 @Route('/debts')
-export class DebtsCtrl extends BaseCtrl {
+export class DebtsCtrl extends BaseCtrl<IDebt> {
     model = Debt;
 
     @Get()
@@ -24,5 +24,10 @@ export class DebtsCtrl extends BaseCtrl {
     @Get('{id}')
     public async _get(id: any): Promise<any> {
         return this.get(id);
+    }
+
+    @Delete('{id}')
+    public async _delete(id: any): Promise<any> {
+        return this.delete(id);
     }
 }

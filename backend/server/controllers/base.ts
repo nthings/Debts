@@ -2,7 +2,7 @@ import { ConnectedSocket, SocketIO, SocketController, MessageBody, OnConnect, On
 import { Op } from 'sequelize';
 
 @SocketController()
-abstract class BaseCtrl {
+abstract class BaseCtrl<IModel> {
 
     abstract model: any;
 
@@ -17,7 +17,7 @@ abstract class BaseCtrl {
     }
 
     // Insert
-    insert = async (body) => {
+    insert = async (body: IModel) => {
         const obj = new this.model(body);
         return await obj.save();
     }
@@ -28,7 +28,7 @@ abstract class BaseCtrl {
     }
 
     // Update by id
-    update = async (id, body) => {
+    update = async (id, body: IModel) => {
         return await this.model.update(body, {
             where: {
                 id: {
