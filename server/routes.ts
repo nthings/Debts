@@ -1,8 +1,9 @@
 /* tslint:disable */
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
-import { CellarCtrl } from './controllers/people';
+import { PeopleCtrl } from './controllers/people';
 import { DebtsCtrl } from './controllers/debts';
 import { PeriodsCtrl } from './controllers/periods';
+import { expressAuthentication } from './utils/auth';
 import * as express from 'express';
 
 const models: TsoaRoute.Models = {
@@ -16,7 +17,8 @@ const models: TsoaRoute.Models = {
     },
     "IPeriod": {
         "properties": {
-            "date": { "dataType": "datetime", "required": true },
+            "start_date": { "dataType": "datetime", "required": true },
+            "end_date": { "dataType": "datetime", "required": true },
             "amount_no_interests": { "dataType": "double", "required": true },
         },
     },
@@ -39,6 +41,7 @@ const validationService = new ValidationService(models);
 
 export function RegisterRoutes(app: express.Express) {
     app.get('/api/people',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
             };
@@ -50,7 +53,7 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new CellarCtrl();
+            const controller = new PeopleCtrl();
 
 
             const promise = controller._getAll.apply(controller, validatedArgs as any);
@@ -69,13 +72,14 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new CellarCtrl();
+            const controller = new PeopleCtrl();
 
 
             const promise = controller._insert.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.post('/api/people/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -89,13 +93,14 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new CellarCtrl();
+            const controller = new PeopleCtrl();
 
 
             const promise = controller._update.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/api/people/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -108,13 +113,14 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new CellarCtrl();
+            const controller = new PeopleCtrl();
 
 
             const promise = controller._get.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.delete('/api/people/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -127,13 +133,14 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new CellarCtrl();
+            const controller = new PeopleCtrl();
 
 
             const promise = controller._delete.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/api/debts',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
             };
@@ -152,6 +159,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.put('/api/debts',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 debt: { "in": "body", "name": "debt", "required": true, "ref": "IDebt" },
@@ -171,6 +179,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.post('/api/debts/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -191,6 +200,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.get('/api/debts/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -210,6 +220,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.delete('/api/debts/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -229,6 +240,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.get('/api/periods',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
             };
@@ -247,6 +259,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.put('/api/periods',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 period: { "in": "body", "name": "period", "required": true, "ref": "IPeriod" },
@@ -266,6 +279,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.post('/api/periods/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -286,6 +300,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.get('/api/periods/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -305,6 +320,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.delete('/api/periods/:id',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "any" },
@@ -324,6 +340,49 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
 
+    function authenticateMiddleware(security: TsoaRoute.Security[] = []) {
+        return (request: any, _response: any, next: any) => {
+            let responded = 0;
+            let success = false;
+
+            const succeed = function(user: any) {
+                if (!success) {
+                    success = true;
+                    responded++;
+                    request['user'] = user;
+                    next();
+                }
+            }
+
+            const fail = function(error: any) {
+                responded++;
+                if (responded == security.length && !success) {
+                    error.status = 401;
+                    next(error)
+                }
+            }
+
+            for (const secMethod of security) {
+                if (Object.keys(secMethod).length > 1) {
+                    let promises: Promise<any>[] = [];
+
+                    for (const name in secMethod) {
+                        promises.push(expressAuthentication(request, name, secMethod[name]));
+                    }
+
+                    Promise.all(promises)
+                        .then((users) => { succeed(users[0]); })
+                        .catch(fail);
+                } else {
+                    for (const name in secMethod) {
+                        expressAuthentication(request, name, secMethod[name])
+                            .then(succeed)
+                            .catch(fail);
+                    }
+                }
+            }
+        }
+    }
 
     function isController(object: any): object is Controller {
         return 'getHeaders' in object && 'getStatus' in object && 'setStatus' in object;

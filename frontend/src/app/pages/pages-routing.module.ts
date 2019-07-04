@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { PeopleComponent } from './people/people.component';
+import { PeriodComponent } from './period/period.component';
 
 const routes: Routes = [{
   path: '',
@@ -18,6 +19,10 @@ const routes: Routes = [{
     {
       path: 'people',
       component: PeopleComponent,
+    },
+    {
+      path: 'period',
+      component: PeriodComponent,
     },
     {
       path: 'iot-dashboard',

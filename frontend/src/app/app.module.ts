@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoadingModule } from './loading/loading.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +26,6 @@ import { LoadingModule } from './loading/loading.module';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
-    LoadingModule,
   ],
   bootstrap: [AppComponent],
   providers: [

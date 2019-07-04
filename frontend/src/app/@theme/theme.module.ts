@@ -53,6 +53,8 @@ import {
   ToggleSettingsButtonComponent,
   SmartTableComponent,
   DialogConfirmComponent,
+  SmartTableDatepickerComponent,
+  SmartTableDatepickerRenderComponent,
 } from './components';
 import {
   CapitalizePipe,
@@ -72,6 +74,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -129,11 +132,16 @@ const COMPONENTS = [
   ToggleSettingsButtonComponent,
   SmartTableComponent,
   DialogConfirmComponent,
+  LoadingComponent,
+  SmartTableDatepickerRenderComponent,
+  SmartTableDatepickerComponent,
 ];
 
 const ENTRY_COMPONENTS = [
   ThemeSwitcherListComponent,
   DialogConfirmComponent,
+  SmartTableDatepickerRenderComponent,
+  SmartTableDatepickerComponent,
 ];
 
 const PIPES = [

@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { People } from './People.model';
 import { Debt } from './Debt.model';
 import { Period } from './Period.model';
+import { hashPassword } from '../utils/login';
 
 export * from './People.model';
 export * from './Debt.model';
@@ -31,5 +32,10 @@ export const sequelize = new Sequelize({
         Period,
     ]);
 
-    sequelize.sync({force: true});
+    if (!process.env.MYSQL_HOST) {
+        sequelize.sync({force: true});
+    } else {
+        sequelize.sync();
+    }
+
 })();

@@ -50,10 +50,10 @@ export class SmartTableComponent {
     source: LocalDataSource = new LocalDataSource();
 
     constructor(private service: Data,
-                private dialogsvc: NbDialogService) {
+        private dialogsvc: NbDialogService) {
         (async () => {
             const data = await this.service.getData();
-            this.source.load(data);
+            this.source.load(data as any[]);
         })();
     }
 
@@ -101,9 +101,14 @@ export class SmartTableComponent {
         }).onClose.subscribe(confirm => {
             if (confirm) {
                 (async () => {
-                    await this.service.delete(event.data.id);
-                    this.source.refresh();
-                    event.confirm.resolve();
+                    const id = event.data.id;
+                    if (id) {
+                        await this.service.delete(id);
+                        this.source.refresh();
+                        event.confirm.resolve();
+                    } else {
+                        console.error('ID undefined');
+                    }
                 })();
             } else {
                 event.confirm.reject();

@@ -1,5 +1,5 @@
 {
-    "name": "debts-services",
+    "name": "debts",
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
@@ -10,9 +10,8 @@
         "build:frontend:prod": "cd frontend && npm run build:prod",
         "build:backend": "tsc",
         "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-        "dev:backend": "concurrently \"npm run watch\" \"nodemon --ignore './frontend/' dist/server\"",
+        "dev:backend": "npm run tsoa:gen && concurrently \"tsc -w\" \"nodemon --ignore './frontend/' dist/server\"",
         "dev:frontend": "cd frontend && npm start",
-        "watch": "tsc -w",
         "gen-routes": "tsoa routes",
         "gen-swagger": "tsoa swagger",
         "tsoa:gen": "npm run gen-routes && npm run gen-swagger"
@@ -35,6 +34,7 @@
         "morgan": "^1.8.2",
         "mysql2": "^1.6.5",
         "nodemailer": "^4.6.7",
+        "pbkdf2": "^3.0.17",
         "reflect-metadata": "^0.1.12",
         "return-deep-diff": "^0.3.0",
         "sequelize": "^5.8.12",

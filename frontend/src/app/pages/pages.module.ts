@@ -7,6 +7,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { PeopleModule } from './people/people.module';
+import { PeriodModule } from './period/period.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -20,6 +21,7 @@ const PAGES_COMPONENTS = [
     ECommerceModule,
     MiscellaneousModule,
     PeopleModule,
+    PeriodModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,

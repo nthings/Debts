@@ -13,6 +13,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/people',
   },
   {
+    title: 'Periodos',
+    icon: 'nb-compose',
+    link: '/pages/period',
+  },
+  {
     title: 'IoT Dashboard',
     icon: 'nb-home',
     link: '/pages/iot-dashboard',

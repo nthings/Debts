@@ -7,26 +7,13 @@ import * as morgan from 'morgan';
 import * as swaggerUi from 'swagger-ui-express';
 import { useSocketServer } from 'socket-controllers';
 import { RegisterRoutes } from './routes';
+import { login } from './utils/login';
 const swaggerDocument = require('./swagger.json');
 import './controllers';
 
 const app: express.Express = express();
 const server: Server = createServer(app);
 let io: SocketIO.Server;
-
-
-// CORS HEADERS
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
-    if ('OPTIONS' === req.method) {
-        res.sendStatus(204);
-    } else {
-        next();
-    }
-});
 
 // Parsers
 app.use(bodyParser.json());
@@ -40,11 +27,11 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Login User
 app.post('/login', (req, res) => {
-    // const user = JSON.parse(userString);
-    // const token = jwt.sign({user: user._id}, process.env.SESSION_SECRET); // , { expiresIn: 10 } seconds
-    // res.status(200).json({user, token});
-    res.status(200);
+    return login(req.body.username, req.body.password);
 });
+
+// API
+RegisterRoutes(app);
 
 // Frontend
 app.use(express.static(path.join(__dirname, 'frontend')));
@@ -52,11 +39,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
 
-RegisterRoutes(app);
-
 // Error Handling
 app.use((err, req, res, next) => {
-    console.error('im here');
     if (res.headersSent) {
         return next(err);
     }

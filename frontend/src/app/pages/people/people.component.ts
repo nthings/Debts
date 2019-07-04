@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SmartTableComponent } from '../../@theme/components';
-import { PeopleData } from '../../@core/mock/people.service';
 import { NbDialogService } from '@nebular/theme';
+import { PasswordSetterComponent } from './password-setter/password-setter.component';
+import { PeopleService } from '../../@core/data/people.service';
 
 const componentOptions = Object.assign(
     {},
@@ -28,6 +29,21 @@ export class PeopleComponent extends SmartTableComponent {
             title: 'Nombre de Usuario',
             type: 'string',
         },
+        password: {
+            title: 'Contraseña',
+            type: 'html',
+            filter: false,
+            valuePrepareFunction: (cell, row) => {
+                return this.sanitizer.bypassSecurityTrustHtml(
+                    `<div class="w-100">${cell.replace(/./g, '*')}</div>`,
+                );
+            },
+            editable: false,
+            editor: {
+                type: 'custom',
+                component: PasswordSetterComponent,
+            },
+        },
         color: {
             title: 'Color',
             type: 'html',
@@ -45,7 +61,7 @@ export class PeopleComponent extends SmartTableComponent {
         },
     };
 
-    constructor(protected peopleService: PeopleData,
+    constructor(protected peopleService: PeopleService,
         protected dialogService: NbDialogService,
         private sanitizer: DomSanitizer) {
         super(peopleService, dialogService);

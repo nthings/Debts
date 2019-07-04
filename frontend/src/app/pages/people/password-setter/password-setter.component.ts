@@ -5,11 +5,8 @@ import { Cell, DefaultEditor } from 'ng2-smart-table';
     selector: 'ngx-color-picker',
     template: `<input
         class="form-control"
-        [(colorPicker)]="cell.newValue"
-        [style.background]="cell.newValue"
-        [value]="cell.newValue"
-        cpPosition="left"
-        cpOKButton="true"
+        type="password"
+        [(ngModel)]="cell.newValue"
     />`,
     styles: [`
         input {
@@ -17,7 +14,7 @@ import { Cell, DefaultEditor } from 'ng2-smart-table';
         }
     `],
 })
-export class ColorPickerComponent extends DefaultEditor {
+export class PasswordSetterComponent extends DefaultEditor {
     @Input() cell: Cell;
     @Input() inputClass: string;
 

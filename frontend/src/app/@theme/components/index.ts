@@ -9,4 +9,5 @@ export * from './layout-direction-switcher/layout-direction-switcher.component';
 export * from './theme-switcher/themes-switcher-list/themes-switcher-list.component';
 export * from './toggle-settings-button/toggle-settings-button.component';
 export * from './smart-table/smart-table.component';
+export * from './smart-table/smart-table-datepicker.component';
 export * from './dialog-confirm/dialog-confirm.component';
