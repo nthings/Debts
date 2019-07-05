@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SmartTableComponent } from '../../@theme/components';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { PasswordSetterComponent } from './password-setter/password-setter.component';
 import { PeopleService } from '../../@core/data/people.service';
 
@@ -25,8 +25,8 @@ export class PeopleComponent extends SmartTableComponent {
             title: 'Nombre',
             type: 'string',
         },
-        username: {
-            title: 'Nombre de Usuario',
+        email: {
+            title: 'Email',
             type: 'string',
         },
         password: {
@@ -35,7 +35,7 @@ export class PeopleComponent extends SmartTableComponent {
             filter: false,
             valuePrepareFunction: (cell, row) => {
                 return this.sanitizer.bypassSecurityTrustHtml(
-                    `<div class="w-100">${cell.replace(/./g, '*')}</div>`,
+                    `<div class="w-100">${(cell.substring(0, 4)).replace(/./g, '*')}</div>`,
                 );
             },
             editable: false,
@@ -63,8 +63,9 @@ export class PeopleComponent extends SmartTableComponent {
 
     constructor(protected peopleService: PeopleService,
         protected dialogService: NbDialogService,
-        private sanitizer: DomSanitizer) {
-        super(peopleService, dialogService);
+        private sanitizer: DomSanitizer,
+        protected toastrService: NbToastrService) {
+        super(peopleService, dialogService, toastrService);
         this.settings = Object.assign(
             this.overrideSettings,
             this.settings,

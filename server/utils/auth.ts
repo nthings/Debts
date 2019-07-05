@@ -9,7 +9,7 @@ export function expressAuthentication(request: express.Request, securityName: st
     }
 
     if (securityName === 'jwt') {
-        const token = request.body.token || request.query.token || request.headers['x-access-token'];
+        const token = request.headers.authorization.split(' ')[1];
 
         return new Promise((resolve, reject) => {
             if (!token) {
@@ -17,9 +17,9 @@ export function expressAuthentication(request: express.Request, securityName: st
             }
             verify(token, secret, (err: any, decoded: any) => {
                 if (err) {
+                    console.error(err);
                     reject(err);
                 } else {
-                    console.log(decoded);
                     if (scopes) {
                         // Check if JWT contains all required scopes
                         for (const scope of scopes) {

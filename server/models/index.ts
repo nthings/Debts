@@ -33,7 +33,14 @@ export const sequelize = new Sequelize({
     ]);
 
     if (!process.env.MYSQL_HOST) {
-        sequelize.sync({force: true});
+        await sequelize.sync({force: true});
+        const obj = new People({
+            name: 'Mauricio Martinez',
+            color: '#000000',
+            email: 'n_othing@hotmail.com',
+            password: hashPassword('12345'),
+        });
+        obj.save();
     } else {
         sequelize.sync();
     }

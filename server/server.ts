@@ -1,11 +1,9 @@
 import { createServer, Server } from 'http';
 import * as path from 'path';
 import * as express from 'express';
-import * as socketIo from 'socket.io';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as swaggerUi from 'swagger-ui-express';
-import { useSocketServer } from 'socket-controllers';
 import { RegisterRoutes } from './routes';
 import { login } from './utils/login';
 const swaggerDocument = require('./swagger.json');
@@ -13,7 +11,6 @@ import './controllers';
 
 const app: express.Express = express();
 const server: Server = createServer(app);
-let io: SocketIO.Server;
 
 // Parsers
 app.use(bodyParser.json());
@@ -26,8 +23,13 @@ app.use(morgan('dev'));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Login User
-app.post('/login', (req, res) => {
-    return login(req.body.username, req.body.password);
+app.post('/api/login', async (req, res) => {
+    const token = await login(req.body.email, req.body.password);
+    if (token) {
+        res.send(token);
+    } else {
+        res.sendStatus(401);
+    }
 });
 
 // API
@@ -51,11 +53,3 @@ app.use((err, req, res, next) => {
 // Set server, In heroku we listen to a unix sock
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Running on localhost:${port}`));
-
-// Start Socket.IO (Realtime)
-io = socketIo(server);
-io.use((socket: any, next: Function) => {
-    next();
-});
-useSocketServer(io);
-

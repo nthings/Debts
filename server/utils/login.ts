@@ -4,20 +4,17 @@ import { v4 } from 'uuid';
 import { People } from '../models';
 const secret = process.env.JWT_SECRET || 'my@#$secret';
 
-export async function login(username, password) {
-    const user = await People.findOne({ where: { username } });
+export async function login(email, password) {
+    const user = await People.findOne({ where: { email } });
     let token = null;
-    if (user && this.comparePassword(user.password, password)) {
+    if (user && comparePassword(user.password, password)) {
+        delete user.password;
         token = {
             token: sign({
                 id: user.id,
-                password,
                 name: user.name,
                 color: user.color,
-                scopes: ['project:read']
-            }, secret, { expiresIn: 1440 }),
-            name: user.name,
-            color: user.color,
+            }, secret, { expiresIn: '24h' }),
         };
     }
     return token;

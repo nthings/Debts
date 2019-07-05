@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import {
     SmartTableComponent,
     SmartTableDatepickerRenderComponent,
@@ -52,8 +52,9 @@ export class PeriodComponent extends SmartTableComponent {
     };
 
     constructor(protected periodService: PeriodService,
-        protected dialogService: NbDialogService) {
-        super(periodService, dialogService);
+        protected dialogService: NbDialogService,
+        protected toastrService: NbToastrService) {
+            super(periodService, dialogService, toastrService);
         this.settings = Object.assign(
             this.overrideSettings,
             this.settings,

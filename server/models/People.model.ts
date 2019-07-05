@@ -4,7 +4,7 @@ import { Debt } from './Debt.model';
 export interface IPeople {
     name: string;
     color: string;
-    username?: string;
+    email?: string;
     password?: string;
 }
 
@@ -20,7 +20,7 @@ export class People extends Model<People> implements IPeople {
     color: string;
 
     @Column
-    username?: string;
+    email?: string;
 
     @Column
     password?: string;

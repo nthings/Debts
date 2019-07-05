@@ -14,7 +14,7 @@ export class PeopleCtrl extends BaseCtrl<IPeople> {
     }
 
     @Put()
-    // @Security('jwt')
+    @Security('jwt')
     public async _insert(@Body() people: IPeople): Promise<any> {
         people.password = hashPassword(people.password);
         return this.insert(people);
@@ -23,7 +23,11 @@ export class PeopleCtrl extends BaseCtrl<IPeople> {
     @Post('{id}')
     @Security('jwt')
     public async _update(id: any, @Body() people: IPeople): Promise<any> {
-        people.password = hashPassword(people.password);
+        if (people.password.length) {
+            people.password = hashPassword(people.password);
+        } else {
+            delete people.password;
+        }
         return this.update(id, people);
     }
 

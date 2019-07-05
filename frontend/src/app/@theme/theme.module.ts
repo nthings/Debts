@@ -38,43 +38,20 @@ import {
   NbCalendarKitModule,
 } from '@nebular/theme';
 
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbSecurityModule } from '@nebular/security';
 
 import {
-  FooterComponent,
   HeaderComponent,
   SearchInputComponent,
-  ThemeSettingsComponent,
-  SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
-  ThemeSwitcherComponent,
-  TinyMCEComponent,
-  ThemeSwitcherListComponent,
-  ToggleSettingsButtonComponent,
   SmartTableComponent,
   DialogConfirmComponent,
   SmartTableDatepickerComponent,
   SmartTableDatepickerRenderComponent,
+  LoadingComponent,
 } from './components';
-import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-  EvaIconsPipe,
-} from './pipes';
-import {
-  OneColumnLayoutComponent,
-  SampleLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
-} from './layouts';
+
 import { DEFAULT_THEME } from './styles/theme.default';
-import { COSMIC_THEME } from './styles/theme.cosmic';
-import { CORPORATE_THEME } from './styles/theme.corporate';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { LoadingComponent } from './components/loading/loading.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -116,20 +93,8 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
-  SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
-  ThemeSwitcherComponent,
-  ThemeSwitcherListComponent,
   HeaderComponent,
-  FooterComponent,
   SearchInputComponent,
-  ThemeSettingsComponent,
-  TinyMCEComponent,
-  OneColumnLayoutComponent,
-  SampleLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
-  ToggleSettingsButtonComponent,
   SmartTableComponent,
   DialogConfirmComponent,
   LoadingComponent,
@@ -138,19 +103,9 @@ const COMPONENTS = [
 ];
 
 const ENTRY_COMPONENTS = [
-  ThemeSwitcherListComponent,
   DialogConfirmComponent,
   SmartTableDatepickerRenderComponent,
   SmartTableDatepickerComponent,
-];
-
-const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-  EvaIconsPipe,
 ];
 
 const NB_THEME_PROVIDERS = [
@@ -158,23 +113,19 @@ const NB_THEME_PROVIDERS = [
     {
       name: 'default',
     },
-    [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME ],
+    [ DEFAULT_THEME ],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
   ...NbDatepickerModule.forRoot().providers,
   ...NbDialogModule.forRoot().providers,
-  ...NbWindowModule.forRoot().providers,
   ...NbToastrModule.forRoot().providers,
-  ...NbChatModule.forRoot({
-    messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-  }).providers,
 ];
 
 @NgModule({
   imports: [...BASE_MODULES, ...NB_MODULES],
-  exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
-  declarations: [...COMPONENTS, ...PIPES],
+  exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
+  declarations: [...COMPONENTS],
   entryComponents: [...ENTRY_COMPONENTS],
 })
 export class ThemeModule {

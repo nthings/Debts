@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Data } from '../../../@core/data/data';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 
 @Component({
     selector: 'ngx-smart-table',
@@ -48,12 +49,28 @@ export class SmartTableComponent {
     overrideSettings = {};
     columns = {};
     source: LocalDataSource = new LocalDataSource();
+    toastrOptions = {
+        destroyByClick: true,
+        duration: 2000,
+        hasIcon: true,
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        preventDuplicates: false,
+    };
 
     constructor(private service: Data,
-        private dialogsvc: NbDialogService) {
+        private dialogsvc: NbDialogService,
+        private toastr: NbToastrService) {
+        this.getData();
+    }
+
+    getData(toastrTitle = null) {
         (async () => {
             const data = await this.service.getData();
             this.source.load(data as any[]);
+            if (toastrTitle) {
+                this.toastr.show(`Tabla ${this.tableTitle}`, toastrTitle, {
+                    ...this.toastrOptions, status: NbToastStatus.SUCCESS});
+            }
         })();
     }
 
@@ -65,9 +82,14 @@ export class SmartTableComponent {
         }).onClose.subscribe(confirm => {
             if (confirm) {
                 (async () => {
-                    await this.service.insert(event.newData);
-                    this.source.refresh();
-                    event.confirm.resolve();
+                    try {
+                        await this.service.insert(event.newData);
+                        event.confirm.resolve();
+                        this.toastr.show(`Tabla ${this.tableTitle}`, 'Registro Creado Correctamente', {
+                            ...this.toastrOptions, status: NbToastStatus.SUCCESS});
+                    } catch (err) {
+                        this.toastr.show(err.message, {...this.toastrOptions, status: NbToastStatus.DANGER});
+                    }
                 })();
             } else {
                 event.confirm.reject();
@@ -83,9 +105,14 @@ export class SmartTableComponent {
         }).onClose.subscribe(confirm => {
             if (confirm) {
                 (async () => {
-                    await this.service.update(event.newData.id, event.newData);
-                    this.source.refresh();
-                    event.confirm.resolve();
+                    try {
+                        await this.service.update(event.newData.id, event.newData);
+                        this.toastr.show(`Tabla ${this.tableTitle}`, 'Registro Editado Correctamente', {
+                            ...this.toastrOptions, status: NbToastStatus.SUCCESS});
+                        event.confirm.resolve();
+                    } catch (err) {
+                        this.toastr.show(err.message, {...this.toastrOptions, status: NbToastStatus.DANGER});
+                    }
                 })();
             } else {
                 event.confirm.reject();
@@ -101,13 +128,19 @@ export class SmartTableComponent {
         }).onClose.subscribe(confirm => {
             if (confirm) {
                 (async () => {
-                    const id = event.data.id;
-                    if (id) {
-                        await this.service.delete(id);
-                        this.source.refresh();
-                        event.confirm.resolve();
-                    } else {
-                        console.error('ID undefined');
+                    try {
+                        const id = event.data.id;
+                        if (id) {
+                            await this.service.delete(id);
+                            this.toastr.show(`Tabla ${this.tableTitle}`, 'Registro Eliminado Correctamente', {
+                                ...this.toastrOptions, status: NbToastStatus.SUCCESS});
+                            event.confirm.resolve();
+
+                        } else {
+                            throw new Error('ID indefinido');
+                        }
+                    } catch (err) {
+                        this.toastr.show(err.message, {...this.toastrOptions, status: NbToastStatus.DANGER});
                     }
                 })();
             } else {

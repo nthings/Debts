@@ -11,7 +11,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "name": { "dataType": "string", "required": true },
             "color": { "dataType": "string", "required": true },
-            "username": { "dataType": "string" },
+            "email": { "dataType": "string" },
             "password": { "dataType": "string" },
         },
     },
@@ -60,6 +60,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     app.put('/api/people',
+        authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 people: { "in": "body", "name": "people", "required": true, "ref": "IPeople" },

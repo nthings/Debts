@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { Cell, DefaultEditor } from 'ng2-smart-table';
 
 @Component({
@@ -14,12 +14,16 @@ import { Cell, DefaultEditor } from 'ng2-smart-table';
         }
     `],
 })
-export class PasswordSetterComponent extends DefaultEditor {
+export class PasswordSetterComponent extends DefaultEditor implements OnInit {
     @Input() cell: Cell;
     @Input() inputClass: string;
 
     @Output() onStopEditing = new EventEmitter<any>();
     @Output() onEdited = new EventEmitter<any>();
     @Output() onClick = new EventEmitter<any>();
+
+    ngOnInit() {
+        this.cell.newValue = '';
+    }
 }
 
