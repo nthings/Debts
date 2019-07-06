@@ -6,6 +6,7 @@ image:
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 before_script:
+  - cd infrastructure
   - rm -rf .terraform
   - terraform --version
   - mkdir -p ./creds
