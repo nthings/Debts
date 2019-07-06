@@ -1,5 +1,5 @@
-variable "mysql_username" {}
-variable "mysql_password" {}
+variable "MYSQL_USERNAME" {}
+variable "MYSQL_PASSWORD" {}
 
 # terraform {
 #   backend "s3" {
