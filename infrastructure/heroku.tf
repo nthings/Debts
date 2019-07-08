@@ -38,7 +38,7 @@ resource "heroku_formation" "formation" {
     quantity = 1
     size = "free"
 
-    depends_on = ["heroku_build.example"]
+    depends_on = ["heroku_build.nodejs"]
 }
 
 output "url" {
