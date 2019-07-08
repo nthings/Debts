@@ -9,8 +9,6 @@ terraform {
   }
 }
 
-provider "heroku" {}
-
 resource "heroku_app" "default" {
   name   = "debts"
   region = "us"

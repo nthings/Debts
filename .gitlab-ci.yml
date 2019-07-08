@@ -6,28 +6,17 @@
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' 
   before_script:
     - cd infrastructure
+    - terraform --version
+    - terraform init
 
 stages:
-  - init
   - validate
   - plan
   - apply
 
-init:
-  stage: init
-  <<: *infra_common
-  script:
-    - terraform --version
-    - terraform init
-  artifacts:
-    paths:
-      - infrastructure/.terraform
-
 validate:
   stage: validate
   <<: *infra_common
-  dependencies:
-    - init
   script:
     - terraform validate
 
