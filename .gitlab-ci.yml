@@ -27,6 +27,8 @@ build:
 validate:
   stage: validate
   <<: *infra_common
+  dependencies:
+    - build
   script:
     - terraform validate
 
