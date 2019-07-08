@@ -17,7 +17,7 @@ build:
   stage: build
   image: alpine:latest
   script:
-    - tar -cvf infrastructure/debts.tar ./
+    - tar -cvf infrastructure/debts.tar .
   artifacts:
     paths:
       - infrastructure/debts.tar
