@@ -8,8 +8,9 @@ lint:
   stage: lint
   image: node:10-alpine
   script:
+    - cd frontend
     - npm i
-    - cd frontend && npm run lint:ci
+    - npm run lint:ci
 
 .infra_common: &infra_common
   image:
@@ -44,7 +45,6 @@ apply:
     - plan
   script:
     - terraform apply -input=false "planfile"
-  when: manual
   environment:
     name: prod/$CI_COMMIT_REF_SLUG-$CI_PROJECT_ID
     on_stop: stop_environment
