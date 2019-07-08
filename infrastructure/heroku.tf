@@ -11,7 +11,7 @@ terraform {
 
 resource "random_string" "random_name" {
   length = 5
-  override_special = "-"
+  special = false
 }
 
 resource "heroku_app" "default" {
