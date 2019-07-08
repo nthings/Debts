@@ -33,8 +33,6 @@ resource "heroku_app" "default" {
 resource "heroku_build" "nodejs" {
   app = heroku_app.default.id
 
-  buildpacks = ["heroku/nodejs"]
-
   source = {
     path = "../dist"
   }

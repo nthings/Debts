@@ -9,6 +9,7 @@ build:
   image: node:10-alpine
   script:
     - npm run build
+    - cp Procfile dist/Procfile
   artifacts:
     paths:
       - dist
