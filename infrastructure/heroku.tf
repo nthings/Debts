@@ -11,7 +11,9 @@ terraform {
 
 resource "random_string" "random_name" {
   length = 5
+  override_special = "-"
 }
+
 resource "heroku_app" "default" {
   name   = "debts${random_string.random_name.result}"
   region = "us"
