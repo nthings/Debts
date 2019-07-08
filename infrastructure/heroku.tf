@@ -16,7 +16,7 @@ resource "heroku_app" "default" {
   region = "us"
 
   config_vars = {
-    MYSQL_HOST = ""
+    MYSQL_HOST = "mysqldatabases.cwttpkh7mbsg.us-east-1.rds.amazonaws.com"
     MYSQL_PORT = 3306
   }
 

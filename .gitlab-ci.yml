@@ -20,37 +20,36 @@ init:
     - terraform --version
     - terraform init
   artifacts:
-    expire_in: 1 day
     paths:
-      - .terraform
+      - infrastructure/.terraform
 
 validate:
   stage: validate
   <<: *infra_common
-  script:
-    - terraform validate
   dependencies:
     - init
+  script:
+    - terraform validate
 
 plan:
   stage: plan
   <<: *infra_common
+  dependencies:
+    - validate
   script:
     - terraform plan -out "planfile"
     - ls -l
-  dependencies:
-    - validate
   artifacts:
     paths:
-      - planfile
+      - infrastructure/planfile
 
 apply:
   stage: apply
   <<: *infra_common
-  script:
-    - terraform apply -input=false "planfile"
   dependencies:
     - plan
+  script:
+    - terraform apply -input=false "planfile"
   when: manual
 
 # destroy:
