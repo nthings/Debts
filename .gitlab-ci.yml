@@ -42,7 +42,6 @@ plan:
     - validate
   script:
     - terraform plan -out "planfile"
-    - ls -l
   artifacts:
     paths:
       - infrastructure/planfile
