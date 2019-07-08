@@ -34,7 +34,7 @@ resource "heroku_build" "nodejs" {
   app = heroku_app.default.id
 
   source = {
-    path = "../dist"
+    path = "../"
   }
 }
 

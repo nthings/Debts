@@ -8,7 +8,7 @@
         "build:prod": "npm run build:backend && npm run build:frontend:prod",
         "build:frontend": "cd frontend && npm i && npm run build",
         "build:frontend:prod": "cd frontend && npm i && npm run build:prod",
-        "build:backend": "npm i && npm run tsoa:gen && tsc",
+        "build:backend": "npm run tsoa:gen && tsc",
         "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
         "dev:backend": "npm run tsoa:gen && concurrently \"tsc -w\" \"nodemon --ignore './frontend/' dist/server\"",
         "dev:frontend": "cd frontend && npm start",
