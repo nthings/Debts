@@ -10,9 +10,19 @@
     - terraform init
 
 stages:
+  - build
   - validate
   - plan
   - apply
+
+build:
+  stage: build
+  image: node:10-alpine
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist
 
 validate:
   stage: validate
@@ -40,12 +50,16 @@ apply:
   script:
     - terraform apply -input=false "planfile"
   when: manual
+  environment:
+    name: prod/$CI_COMMIT_REF_SLUG-$CI_PROJECT_ID
+    on_stop: stop_environment
 
-# destroy:
-#   stage: apply
-#   <<: *infra_common
-#   script:
-#     - terraform destroy -input=false
-#   dependencies:
-#     - plan
-#   when: manual
+stop_environment:
+  stage: apply
+  <<: *infra_common
+  script:
+    - terraform destroy -input=false
+  environment:
+    name: prod/$CI_COMMIT_REF_SLUG-$CI_PROJECT_ID
+    action: stop
+  when: manual

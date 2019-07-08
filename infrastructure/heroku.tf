@@ -23,3 +23,24 @@ resource "heroku_app" "default" {
     MYSQL_PASSWORD = var.MYSQL_PASSWORD
   }
 }
+
+resource "heroku_build" "nodejs" {
+  app = heroku_app.default.id
+
+  source = {
+    path = "../dist"
+  }
+}
+
+resource "heroku_formation" "formation" {
+    app = heroku_app.default.name
+    type = "web"
+    quantity = 1
+    size = "free"
+
+    depends_on = ["heroku_build.example"]
+}
+
+output "url" {
+  value = "https://${heroku_app.default.name}.herokuapp.com"
+}
