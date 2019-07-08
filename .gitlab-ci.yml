@@ -1,17 +1,8 @@
 stages:
-  - lint
   - build
   - validate
   - plan
   - apply
-
-lint:
-  stage: lint
-  image: node:10-alpine
-  script:
-    - cd frontend
-    - npm i
-    - npm run lint:ci
 
 build:
   stage: build

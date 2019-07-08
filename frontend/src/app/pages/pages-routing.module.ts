@@ -5,11 +5,16 @@ import { PagesComponent } from './pages.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { PeopleComponent } from './people/people.component';
 import { PeriodComponent } from './period/period.component';
+import { DebtsComponent } from './debts/debts.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
+    {
+      path: 'debts',
+      component: DebtsComponent,
+    },
     {
       path: 'people',
       component: PeopleComponent,

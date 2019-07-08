@@ -6,6 +6,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { PeopleModule } from './people/people.module';
 import { PeriodModule } from './period/period.module';
+import { DebtsModule } from './debts/debts.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -18,6 +19,7 @@ const PAGES_COMPONENTS = [
     MiscellaneousModule,
     PeopleModule,
     PeriodModule,
+    DebtsModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,
