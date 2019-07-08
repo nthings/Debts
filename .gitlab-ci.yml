@@ -10,6 +10,7 @@ build:
   script:
     - npm run build
     - cp Procfile dist/Procfile
+    - cp package.json dist/package.json
   artifacts:
     paths:
       - dist
