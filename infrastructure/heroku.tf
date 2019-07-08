@@ -12,6 +12,7 @@ terraform {
 resource "random_string" "random_name" {
   length = 5
   special = false
+  upper = false
 }
 
 resource "heroku_app" "default" {
