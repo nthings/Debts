@@ -17,7 +17,11 @@ build:
   stage: build
   image: alpine:latest
   script:
-    - tar -cvf infrastructure/debts.tar .
+    - npm i
+    - npm run build
+    - cp Procfile ./dist/Procfile
+    - cp package.json ./dist/package.json
+    - tar -cvf infrastructure/debts.tar ./dist
   artifacts:
     paths:
       - infrastructure/debts.tar

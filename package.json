@@ -14,7 +14,8 @@
         "dev:frontend": "cd frontend && npm start",
         "gen-routes": "tsoa routes",
         "gen-swagger": "tsoa swagger",
-        "tsoa:gen": "npm run gen-routes && npm run gen-swagger"
+        "tsoa:gen": "npm run gen-routes && npm run gen-swagger",
+        "heroku-postbuild": ""
     },
     "private": false,
     "dependencies": {
@@ -39,7 +40,7 @@
         "sequelize-typescript": "^1.0.0-beta.3",
         "swagger-ui-express": "^4.0.6",
         "tsoa": "^2.4.3",
-        "typescript": "3.1.6",
+        "typescript": "^3.5.2",
         "typings": "^2.1.1"
     },
     "devDependencies": {
