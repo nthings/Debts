@@ -1,5 +1,6 @@
 stages:
   - lint
+  - build
   - validate
   - plan
   - apply
@@ -11,6 +12,15 @@ lint:
     - cd frontend
     - npm i
     - npm run lint:ci
+
+build:
+  stage: build
+  image: alpine:latest
+  script:
+    - tar -cvf infrastructure/debts.tar ./
+  artifacts:
+    paths:
+      - infrastructure/debts.tar
 
 .infra_common: &infra_common
   image:
@@ -28,12 +38,16 @@ validate:
   <<: *infra_common
   script:
     - terraform validate
+  dependencies:
+    - build
 
 plan:
   stage: plan
   <<: *infra_common
   script:
     - terraform plan -out "planfile"
+  dependencies:
+    - build
   artifacts:
     paths:
       - infrastructure/planfile
@@ -43,6 +57,7 @@ apply:
   <<: *infra_common
   dependencies:
     - plan
+    - build
   script:
     - terraform apply -input=false "planfile"
   environment:
