@@ -1,14 +1,3 @@
-.infra_common: &infra_common
-  image:
-    name: hashicorp/terraform:light
-    entrypoint:
-      - '/usr/bin/env'
-      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' 
-  before_script:
-    - cd infrastructure
-    - terraform --version
-    - terraform init
-
 stages:
   - build
   - validate
@@ -24,6 +13,17 @@ build:
     paths:
       - dist
 
+.infra_common: &infra_common
+  image:
+    name: hashicorp/terraform:light
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' 
+  before_script:
+    - cd infrastructure
+    - terraform --version
+    - terraform init
+
 validate:
   stage: validate
   <<: *infra_common
@@ -31,6 +31,9 @@ validate:
     - build
   script:
     - terraform validate
+  artifacts:
+    paths:
+      - dist
 
 plan:
   stage: plan
@@ -43,6 +46,7 @@ plan:
   artifacts:
     paths:
       - infrastructure/planfile
+      - dist
 
 apply:
   stage: apply
