@@ -15,7 +15,7 @@ lint:
 
 build:
   stage: build
-  image: alpine:latest
+  image: node:10-alpine
   script:
     - npm i
     - npm run build
