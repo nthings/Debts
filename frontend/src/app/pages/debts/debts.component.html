@@ -1,9 +1,30 @@
 <nb-card>
     <nb-card-header>
-        Debts
+        {{ tableTitle }}
+        <button class="float-right" nbButton (click)="openBulkDebts()">Subir desde Excel</button>
     </nb-card-header>
 
-    <nb-card-body>
-        <h1>IT WORKS</h1>
+    <nb-card-body style="min-height: 75vh;">
+        <div class="row">
+            <div class="col-3">
+                <ngx-smart-list (customOnStopEditing)="ownerFilter($event)"
+                [data]="settings.columns.owner.editor.config.data"
+                [placeholder]="settings.columns.owner.editor.config.placeholder"></ngx-smart-list>
+            </div>
+            <div class="col-3">
+                <ngx-smart-list (customOnStopEditing)="periodFilter($event)"
+                [data]="settings.columns.period.editor.config.data"
+                [placeholder]="settings.columns.period.editor.config.placeholder"></ngx-smart-list>
+            </div>
+            <div class="col-3">
+                <h1>${{ total }}</h1>
+            </div>
+            <div class="col-3">
+                <button nbButton status="danger" (click)="clean()">Limpiar</button>
+            </div>
+        </div>
+        <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)"
+            (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onEditConfirm($event)">
+        </ng2-smart-table>
     </nb-card-body>
 </nb-card>

@@ -9,7 +9,7 @@ export abstract class Data {
     constructor(private http: HttpClient,
                 private auth: NbAuthService) { }
 
-    private async buildOptions() {
+    async buildOptions() {
         return this.options = {
             headers: new HttpHeaders({
                 'Authorization': `Bearer ${await this.auth.getToken().toPromise()}`,
@@ -21,12 +21,12 @@ export abstract class Data {
         return this.http.get(`/api/${this.path}`, await this.buildOptions()).toPromise();
     }
 
-    async insert(people) {
-        return this.http.put(`/api/${this.path}`, people, await this.buildOptions()).toPromise();
+    async insert(data) {
+        return this.http.put(`/api/${this.path}`, data, await this.buildOptions()).toPromise();
     }
 
-    async update(id, people) {
-        return this.http.post(`/api/${this.path}/${id}`, people, await this.buildOptions()).toPromise();
+    async update(id, data) {
+        return this.http.post(`/api/${this.path}/${id}`, data, await this.buildOptions()).toPromise();
     }
 
     async get(id) {

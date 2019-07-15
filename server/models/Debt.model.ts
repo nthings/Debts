@@ -1,18 +1,19 @@
-import { People, IPeople } from './People.model';
+import { People } from './People.model';
 import { Table, Column, Model, BelongsTo } from 'sequelize-typescript';
-import { Period, IPeriod } from './Period.model';
+import { Period } from './Period.model';
 
 export interface IDebt {
     date: Date;
     description: string;
-    custom_description: string;
-    amount: number;
-    monthly_instalment: number;
-    recurrent: boolean;
-    payed: boolean;
-    date_payed: Date;
-    owner: IPeople;
-    period: IPeriod;
+    custom_description?: string;
+    amount: string;
+    monthly_instalment?: number;
+    current_monthly_instalment?: number;
+    recurrent?: boolean;
+    payed?: boolean;
+    date_payed?: Date;
+    ownerId?: any;
+    periodId?: any;
 }
 
 @Table({
@@ -27,22 +28,25 @@ export class Debt extends Model<Debt> implements IDebt {
     description: string;
 
     @Column
-    custom_description: string;
+    custom_description?: string;
 
     @Column
-    amount: number;
+    amount: string;
 
     @Column
-    monthly_instalment: number;
+    monthly_instalment?: number;
 
     @Column
-    recurrent: boolean;
+    current_monthly_instalment?: number;
 
     @Column
-    payed: boolean;
+    recurrent?: boolean;
 
     @Column
-    date_payed: Date;
+    payed?: boolean;
+
+    @Column
+    date_payed?: Date;
 
     @BelongsTo(() => People, 'ownerId')
     owner: People;

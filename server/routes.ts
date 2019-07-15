@@ -15,25 +15,26 @@ const models: TsoaRoute.Models = {
             "password": { "dataType": "string" },
         },
     },
+    "IDebt": {
+        "properties": {
+            "date": { "dataType": "datetime", "required": true },
+            "description": { "dataType": "string", "required": true },
+            "custom_description": { "dataType": "string" },
+            "amount": { "dataType": "string", "required": true },
+            "monthly_instalment": { "dataType": "double" },
+            "current_monthly_instalment": { "dataType": "double" },
+            "recurrent": { "dataType": "boolean" },
+            "payed": { "dataType": "boolean" },
+            "date_payed": { "dataType": "datetime" },
+            "ownerId": { "dataType": "any" },
+            "periodId": { "dataType": "any" },
+        },
+    },
     "IPeriod": {
         "properties": {
             "start_date": { "dataType": "datetime", "required": true },
             "end_date": { "dataType": "datetime", "required": true },
             "amount_no_interests": { "dataType": "double", "required": true },
-        },
-    },
-    "IDebt": {
-        "properties": {
-            "date": { "dataType": "datetime", "required": true },
-            "description": { "dataType": "string", "required": true },
-            "custom_description": { "dataType": "string", "required": true },
-            "amount": { "dataType": "double", "required": true },
-            "monthly_instalment": { "dataType": "double", "required": true },
-            "recurrent": { "dataType": "boolean", "required": true },
-            "payed": { "dataType": "boolean", "required": true },
-            "date_payed": { "dataType": "datetime", "required": true },
-            "owner": { "ref": "IPeople", "required": true },
-            "period": { "ref": "IPeriod", "required": true },
         },
     },
 };
@@ -159,6 +160,26 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller._getAll.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
+    app.post('/api/debts/duplicates',
+        authenticateMiddleware([{ "jwt": [] }]),
+        function(request: any, response: any, next: any) {
+            const args = {
+                debts: { "in": "body", "name": "debts", "required": true, "dataType": "array", "array": { "ref": "IDebt" } },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DebtsCtrl();
+
+
+            const promise = controller.clean.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
     app.put('/api/debts',
         authenticateMiddleware([{ "jwt": [] }]),
         function(request: any, response: any, next: any) {
@@ -177,6 +198,26 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller._insert.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.put('/api/debts/batch',
+        authenticateMiddleware([{ "jwt": [] }]),
+        function(request: any, response: any, next: any) {
+            const args = {
+                debts: { "in": "body", "name": "debts", "required": true, "dataType": "array", "array": { "ref": "IDebt" } },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DebtsCtrl();
+
+
+            const promise = controller._insert_batch.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.post('/api/debts/:id',
@@ -218,6 +259,27 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller._get.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/api/debts/getByOwnerPeriod/:ownerId/:periodId',
+        authenticateMiddleware([{ "jwt": [] }]),
+        function(request: any, response: any, next: any) {
+            const args = {
+                ownerId: { "in": "path", "name": "ownerId", "required": true, "dataType": "any" },
+                periodId: { "in": "path", "name": "periodId", "required": true, "dataType": "any" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DebtsCtrl();
+
+
+            const promise = controller.getByOwner.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.delete('/api/debts/:id',

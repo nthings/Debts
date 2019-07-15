@@ -83,10 +83,11 @@ export class SmartTableComponent {
             if (confirm) {
                 (async () => {
                     try {
-                        await this.service.insert(event.newData);
+                        await this.service.insert(this.cleanData(event.newData));
                         event.confirm.resolve();
                         this.toastr.show(`Tabla ${this.tableTitle}`, 'Registro Creado Correctamente', {
                             ...this.toastrOptions, status: NbToastStatus.SUCCESS});
+                        this.getData();
                     } catch (err) {
                         this.toastr.show(err.message, {...this.toastrOptions, status: NbToastStatus.DANGER});
                     }
@@ -106,10 +107,11 @@ export class SmartTableComponent {
             if (confirm) {
                 (async () => {
                     try {
-                        await this.service.update(event.newData.id, event.newData);
+                        await this.service.update(event.newData.id, this.cleanData(event.newData));
                         this.toastr.show(`Tabla ${this.tableTitle}`, 'Registro Editado Correctamente', {
                             ...this.toastrOptions, status: NbToastStatus.SUCCESS});
                         event.confirm.resolve();
+                        this.getData();
                     } catch (err) {
                         this.toastr.show(err.message, {...this.toastrOptions, status: NbToastStatus.DANGER});
                     }
@@ -135,7 +137,7 @@ export class SmartTableComponent {
                             this.toastr.show(`Tabla ${this.tableTitle}`, 'Registro Eliminado Correctamente', {
                                 ...this.toastrOptions, status: NbToastStatus.SUCCESS});
                             event.confirm.resolve();
-
+                            this.getData();
                         } else {
                             throw new Error('ID indefinido');
                         }
@@ -147,5 +149,19 @@ export class SmartTableComponent {
                 event.confirm.reject();
             }
         });
+    }
+
+    private cleanData(data) {
+        const copy = JSON.parse(JSON.stringify(data));
+        Object.keys(copy).forEach((key) => {
+            if (copy[key] == null || copy[key] === '') {
+                delete copy[key];
+            }
+            if (copy[key] && copy[key]['foreignKey']) {
+                copy[copy[key]['foreignKey']] = copy[key]['id'];
+                delete copy[key];
+            }
+        });
+        return copy;
     }
 }

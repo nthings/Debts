@@ -7,11 +7,12 @@ import { DefaultEditor, ViewCell } from 'ng2-smart-table';
         <input
             class="w-100"
             nbInput
+            [(ngModel)]="cell.newValue"
             [placeholder]="placeholder"
             [nbDatepicker]="formpicker"
             readonly
         >
-        <nb-datepicker #formpicker></nb-datepicker>
+        <nb-datepicker #formpicker format="YYYY-MM-DD"></nb-datepicker>
   `,
   styles: [`
     .fa {
@@ -35,7 +36,7 @@ export class SmartTableDatepickerComponent extends DefaultEditor implements OnIn
 }
 
 @Component({
-    template: `{{value | date:'short'}}`,
+    template: `{{value | date:'longDate'}}`,
 })
 export class SmartTableDatepickerRenderComponent implements ViewCell, OnInit {
     @Input() value: string;

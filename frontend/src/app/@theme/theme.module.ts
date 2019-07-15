@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 
 import {
   NbActionsModule,
@@ -49,6 +50,7 @@ import {
   SmartTableDatepickerComponent,
   SmartTableDatepickerRenderComponent,
   LoadingComponent,
+  SmartTableListComponent,
 } from './components';
 
 import { DEFAULT_THEME } from './styles/theme.default';
@@ -90,6 +92,7 @@ const NB_MODULES = [
   NbTooltipModule,
   NbCalendarKitModule,
   Ng2SmartTableModule,
+  NbDateFnsDateModule,
 ];
 
 const COMPONENTS = [
@@ -100,12 +103,14 @@ const COMPONENTS = [
   LoadingComponent,
   SmartTableDatepickerRenderComponent,
   SmartTableDatepickerComponent,
+  SmartTableListComponent,
 ];
 
 const ENTRY_COMPONENTS = [
   DialogConfirmComponent,
   SmartTableDatepickerRenderComponent,
   SmartTableDatepickerComponent,
+  SmartTableListComponent,
 ];
 
 const NB_THEME_PROVIDERS = [

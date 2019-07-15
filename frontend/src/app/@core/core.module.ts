@@ -5,13 +5,13 @@ import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
-import { PeopleService } from './data/people.service';
-import { PeriodService } from './data/period.service';
 import { AuthGuard } from './utils/auth.guard';
+import { PeopleService, PeriodService, DebtsService } from './data';
 
 const DATA_SERVICES = [
   PeopleService,
   PeriodService,
+  DebtsService,
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {

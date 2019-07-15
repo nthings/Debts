@@ -1,0 +1,42 @@
+<nb-card>
+    <nb-card-header>Cargar Deudas Desde Archivo</nb-card-header>
+    <nb-card-body style="overflow-x: auto; max-height: 75vh; max-width: 80vw;">
+        <ngx-smart-list *ngIf="!period" (customOnStopEditing)="periodChange($event)"
+            [data]="settings.columns.period.editor.config.data"
+            [placeholder]="settings.columns.period.editor.config.placeholder"></ngx-smart-list>
+        <input *ngIf="period" type="file" accept=".xlsx" (change)="convertFile($event)">
+        <div class="row" *ngIf="selected.length > 0">
+            <div class="col-12 col-sm-3">
+                <span>{{ selected?.length }} deudas seleccionadas. Asignar</span>
+            </div>
+            <div class="col-12 col-sm-3">
+                <nb-select [(ngModel)]="bulkMode" placeholder="Elige un Destino">
+                    <nb-option value="owner">Dueño</nb-option>
+                    <nb-option value="period">Periodo</nb-option>
+                </nb-select>
+            </div>
+            <div class="col-12 col-sm-3">
+                <ngx-smart-list *ngIf="bulkMode === 'owner'" (customOnStopEditing)="bulkChange($event)"
+                    [data]="settings.columns.owner.editor.config.data"
+                    [placeholder]="settings.columns.owner.editor.config.placeholder">
+                </ngx-smart-list>
+
+                <ngx-smart-list *ngIf="bulkMode === 'period'" (customOnStopEditing)="bulkChange($event)"
+                    [data]="settings.columns.period.editor.config.data"
+                    [placeholder]="settings.columns.period.editor.config.placeholder">
+                </ngx-smart-list>
+            </div>
+            <div class="col-12 col-sm-3">
+                <button nbButton status="success" (click)="bulkAssign()" style="margin-left: 1rem;">Guardar</button>
+            </div>
+        </div>
+
+        <ng2-smart-table *ngIf="sourceLoaded" [settings]="settings" [source]="source"
+            (userRowSelect)="onUserRowSelect($event)" (createConfirm)="onCreate($event)" (editConfirm)="onEdit($event)" (deleteConfirm)="onDelete($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton status="danger" (click)="cancel()">Cancelar</button>
+        <button nbButton status="success" (click)="submit()" style="margin-left: 1rem;">Guardar</button>
+    </nb-card-footer>
+</nb-card>

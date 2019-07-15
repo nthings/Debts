@@ -22,5 +22,5 @@ export class Period extends Model<Period> implements IPeriod {
     amount_no_interests: number;
 
     @HasMany(() => Debt, 'periodId')
-    debts: Debt[];
+    debts?: Debt[];
 }

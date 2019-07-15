@@ -22,7 +22,7 @@ export class PeriodComponent extends SmartTableComponent {
             editable: false,
             addable: false,
         },
-        startDate: {
+        start_date: {
             title: 'Fecha de Inicio',
             type: 'custom',
             renderComponent: SmartTableDatepickerRenderComponent,
@@ -34,7 +34,7 @@ export class PeriodComponent extends SmartTableComponent {
                 component: SmartTableDatepickerComponent,
             },
         },
-        endDate: {
+        end_date: {
             title: 'Fecha Final',
             type: 'custom',
             renderComponent: SmartTableDatepickerRenderComponent,
@@ -43,6 +43,9 @@ export class PeriodComponent extends SmartTableComponent {
             editor: {
                 type: 'custom',
                 component: SmartTableDatepickerComponent,
+                config: {
+                    placeholder: 'Testing changing',
+                },
             },
         },
         amount_no_interests: {

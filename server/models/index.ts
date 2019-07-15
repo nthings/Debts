@@ -32,15 +32,32 @@ export const sequelize = new Sequelize({
         Period,
     ]);
 
-    if (!process.env.MYSQL_HOST) {
+    if (false) {
+    // if (!process.env.MYSQL_HOST) {
         await sequelize.sync({force: true});
-        const obj = new People({
+        const people = new People({
             name: 'Mauricio Martinez',
             color: '#000000',
             email: 'n_othing@hotmail.com',
             password: hashPassword('12345'),
         });
-        obj.save();
+        const people_id = (await people.save()).id;
+
+        const period = new Period({
+            start_date: new Date(),
+            end_date: new Date(),
+            amount_no_interests: 10000,
+        });
+        const period_id = (await period.save()).id;
+
+        const debt = new Debt({
+            date: new Date(),
+            description: 'test',
+            amount: 10000,
+            ownerId: people_id,
+            periodId: period_id,
+        });
+        debt.save();
     } else {
         sequelize.sync();
     }
