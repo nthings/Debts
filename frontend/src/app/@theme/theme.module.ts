@@ -92,7 +92,6 @@ const NB_MODULES = [
   NbTooltipModule,
   NbCalendarKitModule,
   Ng2SmartTableModule,
-  NbDateFnsDateModule,
 ];
 
 const COMPONENTS = [

@@ -32,8 +32,8 @@ export const sequelize = new Sequelize({
         Period,
     ]);
 
-    if (false) {
-    // if (!process.env.MYSQL_HOST) {
+    // if (false) {
+    if (!process.env.MYSQL_HOST) {
         await sequelize.sync({force: true});
         const people = new People({
             name: 'Mauricio Martinez',

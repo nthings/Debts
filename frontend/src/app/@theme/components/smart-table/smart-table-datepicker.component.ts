@@ -12,7 +12,7 @@ import { DefaultEditor, ViewCell } from 'ng2-smart-table';
             [nbDatepicker]="formpicker"
             readonly
         >
-        <nb-datepicker #formpicker format="YYYY-MM-DD"></nb-datepicker>
+        <nb-datepicker #formpicker></nb-datepicker>
   `,
   styles: [`
     .fa {
