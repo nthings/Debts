@@ -9,14 +9,8 @@ terraform {
   }
 }
 
-resource "random_string" "random_name" {
-  length = 5
-  special = false
-  upper = false
-}
-
 resource "heroku_app" "default" {
-  name   = "debts${random_string.random_name.result}"
+  name   = "deudas"
   region = "us"
 
   config_vars = {
