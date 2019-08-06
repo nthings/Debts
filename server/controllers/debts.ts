@@ -28,12 +28,15 @@ export class DebtsCtrl extends BaseCtrl<IDebt> {
                 };
 
                 const obj = await this.model.findOne({where, ...this.include});
-                if (!obj) {
-                    clean.push(debt);
-                } else {
-                    obj.dataValues.description = debt.description;
-                    obj.dataValues.current_monthly_instalment = debt.current_monthly_instalment;
-                    clean.push(obj);
+                if (obj.dataValues.description !== debt.description && obj.dataValues.amount !== debt.amount) {
+                    if (!obj) {
+                        clean.push(debt);
+                    } else {
+                        obj.dataValues.description = debt.description;
+                        obj.dataValues.current_monthly_instalment = debt.current_monthly_instalment;
+                        obj.dataValues.id = null;
+                        clean.push(obj);
+                    }
                 }
             }
             resolve(clean);
