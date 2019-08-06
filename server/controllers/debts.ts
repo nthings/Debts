@@ -22,22 +22,15 @@ export class DebtsCtrl extends BaseCtrl<IDebt> {
             for (const debt of debts) {
                 const where: any = {
                     amount: debt.amount,
-                    description: debt.description
+                    description: {
+                        [Op.like]: debt.description.replace(/ .*/, '%')
+                    }
                 };
-                const monthly_instalments = /\(([^\)]+)\)/g.exec(debt.description);
-                if (monthly_instalments) {
-                    where.description = {
-                        [Op.like]: debt.description.replace(`(${monthly_instalments[1]})`, '%')
-                    };
-                }
 
                 const obj = await this.model.findOne({where, ...this.include});
                 if (!obj) {
                     clean.push(debt);
                 } else {
-                    if (obj.dataValues.current_monthly_instalment) {
-                        obj.dataValues.current_monthly_instalment = obj.dataValues.current_monthly_instalment + 1;
-                    }
                     clean.push(obj);
                 }
             }
