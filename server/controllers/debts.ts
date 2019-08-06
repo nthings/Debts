@@ -31,6 +31,9 @@ export class DebtsCtrl extends BaseCtrl<IDebt> {
                 if (!obj) {
                     clean.push(debt);
                 } else {
+                    if (obj.dataValues.current_monthly_instalment) {
+                        obj.dataValues.current_monthly_instalment = obj.dataValues.current_monthly_instalment + 1;
+                    }
                     clean.push(obj);
                 }
             }
