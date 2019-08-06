@@ -9,9 +9,10 @@ terraform {
   }
 }
 
-resource "heroku_app" "default" {
-  name   = "d3bts"
-  region = "us"
+module "heroku-free-stack" {
+  source = "git::https://github.com/NTHINGs/terraform-heroku-free-stack.git?ref=master"
+
+  name = "d3bts"
 
   config_vars = {
     MYSQL_HOST = "mysqldatabases.cwttpkh7mbsg.us-east-1.rds.amazonaws.com"
@@ -22,25 +23,10 @@ resource "heroku_app" "default" {
     MYSQL_USERNAME = var.MYSQL_USERNAME
     MYSQL_PASSWORD = var.MYSQL_PASSWORD
   }
-}
 
-resource "heroku_build" "nodejs" {
-  app = heroku_app.default.id
-
-  source = {
-    path = "./debts.tar"
-  }
-}
-
-resource "heroku_formation" "formation" {
-    app = heroku_app.default.name
-    type = "web"
-    quantity = 1
-    size = "free"
-
-    depends_on = ["heroku_build.nodejs"]
+  tar_build_path = "./debts.tar"
 }
 
 output "url" {
-  value = "https://${heroku_app.default.name}.herokuapp.com"
+  value = module.heroku-free-stack.url
 }
