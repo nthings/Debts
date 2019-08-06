@@ -10,7 +10,7 @@ terraform {
 }
 
 resource "heroku_app" "default" {
-  name   = "deudas"
+  name   = "d3bts"
   region = "us"
 
   config_vars = {
