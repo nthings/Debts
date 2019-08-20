@@ -36,6 +36,8 @@ export class DebtsCtrl extends BaseCtrl<IDebt> {
                     obj.dataValues.current_monthly_instalment = debt.current_monthly_instalment;
                     obj.dataValues.id = null;
                     clean.push(obj);
+                } else {
+                    clean.push(debt);
                 }
 
             }
