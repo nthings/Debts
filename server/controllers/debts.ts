@@ -24,20 +24,21 @@ export class DebtsCtrl extends BaseCtrl<IDebt> {
                     amount: debt.amount,
                     description: {
                         [Op.like]: debt.description.replace(/ .*/, '%')
-                    }
+                    },
                 };
 
                 const obj = await this.model.findOne({where, ...this.include});
                 if (!obj) {
                     clean.push(debt);
-                } else if ((obj.dataValues.current_monthly_instalment) !== +(debt.current_monthly_instalment) &&
-                            obj.dataValues.periodId !== debt.periodId) {
+                } else {
+                // } else if () {
                     obj.dataValues.description = debt.description;
                     obj.dataValues.current_monthly_instalment = debt.current_monthly_instalment;
                     obj.dataValues.id = null;
+                    console.log(obj.dataValues);
                     clean.push(obj);
-                } else {
-                    clean.push(debt);
+                // } else {
+                //     clean.push(debt);
                 }
 
             }
