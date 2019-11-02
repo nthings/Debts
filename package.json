@@ -38,7 +38,7 @@
         "pbkdf2": "^3.0.17",
         "reflect-metadata": "^0.1.12",
         "return-deep-diff": "^0.3.0",
-        "sequelize": "^5.8.12",
+        "sequelize": "^5.15.1",
         "sequelize-typescript": "^1.0.0-beta.3",
         "swagger-ui-express": "^4.0.6",
         "tsoa": "^2.4.3",
