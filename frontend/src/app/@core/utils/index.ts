@@ -1,5 +1,7 @@
-import { AuthGuard } from './auth.guard';
+import { LayoutService } from './layout.service';
+import { AnalyticsService } from './analytics.service';
 
 export {
-  AuthGuard,
+  LayoutService,
+  AnalyticsService,
 };

@@ -1,141 +1,97 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { MatRippleModule } from '@angular/material/core';
 import {
   NbActionsModule,
-  NbCardModule,
   NbLayoutModule,
   NbMenuModule,
-  NbRouteTabsetModule,
   NbSearchModule,
   NbSidebarModule,
-  NbTabsetModule,
-  NbThemeModule,
   NbUserModule,
-  NbCheckboxModule,
-  NbPopoverModule,
   NbContextMenuModule,
-  NbProgressBarModule,
-  NbCalendarModule,
-  NbCalendarRangeModule,
-  NbStepperModule,
   NbButtonModule,
-  NbInputModule,
-  NbAccordionModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbWindowModule,
-  NbListModule,
-  NbToastrModule,
-  NbAlertModule,
-  NbSpinnerModule,
-  NbRadioModule,
   NbSelectModule,
-  NbChatModule,
-  NbTooltipModule,
-  NbCalendarKitModule,
+  NbIconModule,
+  NbThemeModule,
 } from '@nebular/theme';
-
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
 import {
+  FooterComponent,
   HeaderComponent,
+  LayoutDirectionSwitcherComponent,
   SearchInputComponent,
-  SmartTableComponent,
-  DialogConfirmComponent,
-  SmartTableDatepickerComponent,
-  SmartTableDatepickerRenderComponent,
-  LoadingComponent,
-  SmartTableListComponent,
+  SwitcherComponent,
 } from './components';
-
+import {
+  CapitalizePipe,
+  PluralPipe,
+  RoundPipe,
+  TimingPipe,
+  NumberWithCommasPipe,
+} from './pipes';
+import {
+  OneColumnLayoutComponent,
+  ThreeColumnsLayoutComponent,
+  TwoColumnsLayoutComponent,
+} from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
-
-const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
+import { COSMIC_THEME } from './styles/theme.cosmic';
+import { CORPORATE_THEME } from './styles/theme.corporate';
+import { DARK_THEME } from './styles/theme.dark';
+import { MATERIAL_LIGHT_THEME } from './styles/material/theme.material-light';
+import { MATERIAL_DARK_THEME } from './styles/material/theme.material-dark';
 
 const NB_MODULES = [
-  NbCardModule,
   NbLayoutModule,
-  NbTabsetModule,
-  NbRouteTabsetModule,
   NbMenuModule,
   NbUserModule,
   NbActionsModule,
   NbSearchModule,
   NbSidebarModule,
-  NbCheckboxModule,
-  NbPopoverModule,
   NbContextMenuModule,
-  NgbModule,
-  NbSecurityModule, // *nbIsGranted directive,
-  NbProgressBarModule,
-  NbCalendarModule,
-  NbCalendarRangeModule,
-  NbStepperModule,
+  NbSecurityModule,
   NbButtonModule,
-  NbListModule,
-  NbToastrModule,
-  NbInputModule,
-  NbAccordionModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbWindowModule,
-  NbAlertModule,
-  NbSpinnerModule,
-  NbRadioModule,
   NbSelectModule,
-  NbChatModule,
-  NbTooltipModule,
-  NbCalendarKitModule,
-  Ng2SmartTableModule,
+  NbIconModule,
+  NbEvaIconsModule,
 ];
-
 const COMPONENTS = [
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
   HeaderComponent,
+  FooterComponent,
   SearchInputComponent,
-  SmartTableComponent,
-  DialogConfirmComponent,
-  LoadingComponent,
-  SmartTableDatepickerRenderComponent,
-  SmartTableDatepickerComponent,
-  SmartTableListComponent,
+  OneColumnLayoutComponent,
+  ThreeColumnsLayoutComponent,
+  TwoColumnsLayoutComponent,
 ];
-
-const ENTRY_COMPONENTS = [
-  DialogConfirmComponent,
-  SmartTableDatepickerRenderComponent,
-  SmartTableDatepickerComponent,
-  SmartTableListComponent,
-];
-
-const NB_THEME_PROVIDERS = [
-  ...NbThemeModule.forRoot(
-    {
-      name: 'default',
-    },
-    [ DEFAULT_THEME ],
-  ).providers,
-  ...NbSidebarModule.forRoot().providers,
-  ...NbMenuModule.forRoot().providers,
-  ...NbDatepickerModule.forRoot().providers,
-  ...NbDialogModule.forRoot().providers,
-  ...NbToastrModule.forRoot().providers,
+const PIPES = [
+  CapitalizePipe,
+  PluralPipe,
+  RoundPipe,
+  TimingPipe,
+  NumberWithCommasPipe,
 ];
 
 @NgModule({
-  imports: [...BASE_MODULES, ...NB_MODULES],
-  exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS],
-  declarations: [...COMPONENTS],
-  entryComponents: [...ENTRY_COMPONENTS],
+  imports: [CommonModule, MatRippleModule, ...NB_MODULES],
+  exports: [CommonModule, MatRippleModule, ...PIPES, ...COMPONENTS],
+  declarations: [...COMPONENTS, ...PIPES],
 })
 export class ThemeModule {
-  static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
+  static forRoot(): ModuleWithProviders<ThemeModule> {
+    return {
       ngModule: ThemeModule,
-      providers: [...NB_THEME_PROVIDERS],
+      providers: [
+        ...NbThemeModule.forRoot(
+          {
+            name: 'default',
+          },
+          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME, MATERIAL_LIGHT_THEME, MATERIAL_DARK_THEME ],
+        ).providers,
+      ],
     };
   }
 }

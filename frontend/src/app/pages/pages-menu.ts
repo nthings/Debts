@@ -3,23 +3,34 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
-    icon: 'nb-e-commerce',
+    icon: 'home-outline',
     link: '/pages/dashboard',
     home: true,
   },
   {
-    title: 'Deudas',
-    icon: 'nb-e-commerce',
-    link: '/pages/debts',
+    title: 'FEATURES',
+    group: true,
   },
   {
-    title: 'Personas',
-    icon: 'nb-person',
-    link: '/pages/people',
-  },
-  {
-    title: 'Periodos',
-    icon: 'nb-compose',
-    link: '/pages/period',
+    title: 'Auth',
+    icon: 'lock-outline',
+    children: [
+      {
+        title: 'Login',
+        link: '/auth/login',
+      },
+      {
+        title: 'Register',
+        link: '/auth/register',
+      },
+      {
+        title: 'Request Password',
+        link: '/auth/request-password',
+      },
+      {
+        title: 'Reset Password',
+        link: '/auth/reset-password',
+      },
+    ],
   },
 ];
