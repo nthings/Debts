@@ -24,7 +24,7 @@
         "@types/express": "^4.16.0",
         "@types/express-session": "^1.15.10",
         "@types/node": "^9.6.23",
-        "async": "^2.6.1",
+        "async": "^3.2.2",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "core-js": "^2.5.7",
