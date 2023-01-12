@@ -33,7 +33,7 @@
         "jsonwebtoken": "^8.3.0",
         "morgan": "^1.8.2",
         "mysql2": "^1.6.5",
-        "ngx-papaparse": "^3.0.3",
+        "ngx-papaparse": "^6.0.2",
         "nodemailer": "^4.6.7",
         "pbkdf2": "^3.0.17",
         "reflect-metadata": "^0.1.12",
