@@ -4,10 +4,14 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as swaggerUi from 'swagger-ui-express';
+import * as dotenv from 'dotenv'
 import { RegisterRoutes } from './routes';
 import { login } from './utils/login';
 const swaggerDocument = require('./swagger.json');
 import './controllers';
+
+// Load environment variables
+dotenv.config({ path: path.join(__dirname, '../.env')});
 
 const app: express.Express = express();
 const server: Server = createServer(app);
@@ -50,6 +54,6 @@ app.use((err, req, res, next) => {
     res.status(status).send(err);
 });
 
-// Set server, In heroku we listen to a unix sock
+// Set server
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Running on localhost:${port}`));

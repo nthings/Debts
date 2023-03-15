@@ -1,0 +1,45 @@
+version: '3.3'
+services:
+  app:
+    build: .
+    command: npm run dev
+    restart: always
+    ports:
+      - '3000:3000'
+      - '4200:4200'
+    expose:
+      - '3000'
+      - '4200'
+    depends_on:
+      - db
+    environment:
+      - MYSQL_DATABASE=debts
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+    volumes:
+      - .:/usr/src/app
+  db:
+    image: mysql:5-debian
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'debts'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'user'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'password'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - my-db:/var/lib/mysql
+# Names our volume
+volumes:
+  my-db:
