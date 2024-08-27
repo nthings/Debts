@@ -17,15 +17,22 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(service_account_i
     'https://www.googleapis.com/auth/drive'
 ])
 
-# The ID and range of the spreadsheet.
-SPREADSHEET_ID = '1qGS2gSPCuFgZGRh7yIZXvtibJtrqQ9rrqNfLhIhBJTE'  # Replace with your Spreadsheet ID
-RANGE_NAME = 'Transacciones!B:E'  # Replace with your sheet name and range
-
 service = build('sheets', 'v4', credentials=credentials)
 sheet = service.spreadsheets()
 
-@app.route('/add_row', methods=['POST'])
+@app.route("/", methods=['GET'])
+def home():
+    return "Hello World", 200
+
+@app.route('/', methods=['POST'])
 def add_row():
+    # Get the spreadsheet ID and range name from query parameters
+    spreadsheet_id = request.args.get('spreadsheet_id')
+    range_name = request.args.get('range_name')
+
+    if not spreadsheet_id or not range_name:
+        return jsonify({"error": "Spreadsheet ID and range name are required"}), 400
+
     data = request.json  # Get JSON data from the request
 
     if not data:
@@ -33,14 +40,14 @@ def add_row():
 
     try:
         # Fetch the current data in the range to find the first empty row
-        result = sheet.values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+        result = sheet.values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
         values = result.get('values', [])
 
         # Determine the first empty row based on the length of the fetched values
         next_row = len(values) + 1  # Add 1 since Google Sheets is 1-indexed
 
-        # Define the range for the next row in columns B:E
-        target_range = f'Transacciones!B{next_row}:E{next_row}'
+        # Define the range for the next row in the specified columns
+        target_range = f'{range_name.split("!")[0]}!B{next_row}:E{next_row}'
 
         # Assuming data is a dictionary where keys match your spreadsheet headers
         # The list should match the number of columns (B to E => 4 columns)
@@ -52,7 +59,7 @@ def add_row():
 
         # Append the data to the specific range
         result = sheet.values().update(
-            spreadsheetId=SPREADSHEET_ID,
+            spreadsheetId=spreadsheet_id,
             range=target_range,
             valueInputOption="RAW",
             body=body
