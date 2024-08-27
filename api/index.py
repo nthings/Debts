@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from oauth2client.service_account import ServiceAccountCredentials
 from googleapiclient.discovery import build
 from dotenv import load_dotenv  # Import the load_dotenv function
@@ -17,6 +17,9 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(service_account_i
     'https://www.googleapis.com/auth/drive'
 ])
 
+# Load API key from environment variable
+API_KEY = os.environ.get('API_KEY')
+
 service = build('sheets', 'v4', credentials=credentials)
 sheet = service.spreadsheets()
 
@@ -26,6 +29,9 @@ def home():
 
 @app.route('/', methods=['POST'])
 def add_row():
+    # Check API key before processing the request
+    _check_api_key(request)
+
     # Get the spreadsheet ID and range name from query parameters
     spreadsheet_id = request.args.get('spreadsheet_id')
     range_name = request.args.get('range_name')
@@ -68,6 +74,12 @@ def add_row():
         return jsonify({"message": "Row added successfully", "result": result}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+def _check_api_key(request):
+    """Check if the request contains the correct API key."""
+    api_key = request.headers.get('X-API-KEY')
+    if not api_key or api_key != API_KEY:
+        abort(403, description="Forbidden: Invalid API key")
 
 if __name__ == '__main__':
     app.run(debug=True)
